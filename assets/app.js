@@ -79,16 +79,19 @@
 
   /* ---------- forms ---------- */
   var EMAIL = CFG.email || {};
+  var PROVIDER = (CFG.provider || "").toLowerCase();
+  var WEBHOOK = CFG.webhook_url || "";
+
   function emailReady(template) {
     return !!(EMAIL.public_key && EMAIL.service_id && template);
   }
 
+  function isLive(kind) {
+    if (PROVIDER === "webhook" && WEBHOOK) return true;
+    return emailReady(kind === "download" ? EMAIL.template_download : EMAIL.template_contact);
+  }
+
   function sendEmail(templateId, params) {
-    if (!emailReady(templateId)) {
-      return new Promise(function (resolve) {
-        setTimeout(function () { resolve({ demo: true }); }, 650);
-      });
-    }
     return fetch("https://api.emailjs.com/api/v1.0/email/send", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -101,6 +104,41 @@
     }).then(function (res) {
       if (!res.ok) throw new Error("EmailJS " + res.status + ": " + res.text());
       return { demo: false };
+    });
+  }
+
+  /**
+   * Στέλνει τα δεδομένα της φόρμας με τον provider που έχει ρυθμιστεί.
+   * kind: "download" | "contact" | "newsletter"
+   */
+  function deliver(kind, params) {
+    params.form_type = params.form_type || kind;
+    if (PROVIDER === "webhook" && WEBHOOK) {
+      // Google Apps Script / Make / Zapier: text/plain ώστε να μην γίνεται preflight.
+      return fetch(WEBHOOK, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(params),
+        redirect: "follow"
+      }).then(function (res) {
+        if (!res.ok) throw new Error("Webhook " + res.status);
+        return res.text().then(function (text) {
+          var ok = true;
+          try {
+            var data = JSON.parse(text);
+            ok = data.ok !== false;
+          } catch (e) { /* κείμενο, όχι JSON — θεωρείται επιτυχία */ }
+          if (!ok) throw new Error("Webhook rejected");
+          return { demo: false };
+        });
+      });
+    }
+    var template = kind === "download" ? EMAIL.template_download : EMAIL.template_contact;
+    if ((PROVIDER === "emailjs" || !PROVIDER) && emailReady(template)) {
+      return sendEmail(template, params);
+    }
+    return new Promise(function (resolve) {
+      setTimeout(function () { resolve({ demo: true }); }, 650);
     });
   }
 
@@ -195,7 +233,7 @@
     form.elements.version.value = version;
     form.elements.file.value = file;
     form.elements.download_url.value = url;
-    $$("[data-demo-note]", modal).forEach(function (n) { n.hidden = emailReady(EMAIL.template_download); });
+    $$("[data-demo-note]", modal).forEach(function (n) { n.hidden = isLive("download"); });
     modal.showModal();
     document.body.style.overflow = "hidden";
     var first = form.querySelector("input[name=name]");
@@ -238,7 +276,7 @@
         site: CFG.domain || "12358soft.com",
         submitted_at: new Date().toISOString()
       };
-      sendEmail(EMAIL.template_download, params).then(function (res) {
+      deliver("download", params).then(function (res) {
         busy(submit, false);
         var panel = successPanel(dlForm, "");
         var msg = "Στείλαμε τον σύνδεσμο λήψης για το " + params.app_name + " στο " + params.to_email + ".";
@@ -285,7 +323,7 @@
         site: CFG.domain || "12358soft.com",
         submitted_at: new Date().toISOString()
       };
-      sendEmail(EMAIL.template_contact, params).then(function (res) {
+      deliver("contact", params).then(function (res) {
         busy(submit, false);
         var panel = successPanel(form, "");
         if (panel) {
@@ -311,8 +349,8 @@
       }
       var submit = form.querySelector("button");
       busy(submit, true);
-      sendEmail(EMAIL.template_contact, {
-        to_email: input.value, reply_to: input.value, form_type: "newsletter",
+      deliver("newsletter", {
+        to_email: input.value, reply_to: input.value,
         site: CFG.domain || "12358soft.com", submitted_at: new Date().toISOString()
       }).then(function (res) {
         busy(submit, false);
