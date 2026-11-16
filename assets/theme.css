@@ -228,8 +228,8 @@ html[data-theme="light"] .theme-btn .i-moon { display: block; }
 .brand-name { white-space: nowrap; }
 .brand-soft { color: var(--muted); font-weight: 500; }
 .brand:hover .brand-soft { color: var(--accent); }
-.brand-mark { border-radius: 9px; box-shadow: 0 4px 14px rgba(91, 140, 255, .3);
-  background: linear-gradient(135deg, #5B8CFF, #7C5CFF); display: inline-grid; place-items: center; flex: none; }
+.brand-mark { border-radius: 9px; box-shadow: 0 4px 14px rgba(255, 138, 0, .30), inset 0 1px 0 rgba(255, 255, 255, .30);
+  background: linear-gradient(140deg, #FFB020, #FF8A00); display: inline-grid; place-items: center; flex: none; }
 .brand-mark svg { width: 72%; height: 72%; }
 .nav { display: flex; gap: 4px; margin-left: 10px; flex: 1; }
 .nav-link {
