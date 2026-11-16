@@ -616,6 +616,8 @@ body.sticky-active { padding-bottom: 78px; }
 }
 .lic-action { margin-top: auto; padding-top: 18px; }
 .lic-note { color: var(--muted-2); font-size: .78rem; margin-top: 18px; }
+.section-addons .lic-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 400px)); justify-content: start; }
+.table-wrap td.c { text-align: center; font-variant-numeric: tabular-nums; }
 
 /* ---------- προδιαγραφές ---------- */
 .specs { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; max-width: 780px; }
