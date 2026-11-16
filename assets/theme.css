@@ -775,6 +775,9 @@ html[data-theme="light"] .upg-card { box-shadow: 0 1px 2px rgba(16, 24, 48, .05)
 .c-card p { color: var(--muted); font-size: .92rem; }
 .c-link { display: inline-block; margin-top: 12px; font-size: .78rem; color: var(--accent); }
 .contact-split { display: grid; grid-template-columns: 1.15fr .85fr; gap: 48px; align-items: start; }
+.contact-head { margin-bottom: 26px; max-width: 60ch; }
+.contact-head h2 { margin-bottom: .35rem; }
+.contact-head .muted { margin: 0; }
 .contact-form-wrap h2 { margin-bottom: .4rem; }
 .contact-form-wrap > .muted { margin-bottom: 24px; }
 .contact-aside { padding: 28px; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); }
@@ -920,6 +923,33 @@ html[data-theme="light"] .p-card-media { background: #0B0F1A; }
 html[data-theme="light"] .buy-media { box-shadow: 0 2px 4px rgba(16, 24, 48, .06), 0 26px 60px rgba(16, 24, 48, .13); }
 html[data-theme="light"] .site-header.is-scrolled { box-shadow: 0 10px 30px rgba(16, 24, 48, .06); }
 html[data-theme="light"] .toc { border-left-color: rgba(10, 16, 32, .08); }
+
+/* ---------- οριζόντιος ολισθαίνων κατάλογος προϊόντων ---------- */
+.sec-head.has-actions { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+.scroll-btns { display: flex; gap: 8px; flex: none; }
+.scroll-btns button {
+  width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line-strong);
+  background: var(--surface); color: var(--text); font-size: 1.4rem; line-height: 1;
+  cursor: pointer; display: grid; place-items: center; padding-bottom: 3px;
+  transition: background .2s var(--ease), border-color .2s var(--ease), transform .2s var(--ease);
+}
+.scroll-btns button:hover { background: var(--accent-weak); border-color: var(--accent); color: var(--accent); }
+.scroll-btns button:active { transform: scale(.95); }
+.scroll-btns button:disabled { opacity: .35; cursor: default; }
+.p-scroller {
+  display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory;
+  scroll-behavior: smooth; padding: 4px 2px 18px; scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent; -webkit-overflow-scrolling: touch;
+}
+.p-scroller > * { flex: 0 0 min(360px, 84vw); scroll-snap-align: start; }
+.p-scroller::-webkit-scrollbar { height: 8px; }
+.p-scroller::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 99px; }
+.p-scroller::-webkit-scrollbar-track { background: transparent; }
+.mt-28 { margin-top: 28px; }
+@media (max-width: 720px) {
+  .sec-head.has-actions { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .scroll-btns { display: none; }
+}
 
 /* ---------- reveal ---------- */
 .reveal { opacity: 0; transform: translateY(14px); transition: opacity .55s var(--ease), transform .55s var(--ease); }

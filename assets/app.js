@@ -473,6 +473,17 @@
     });
   });
 
+  /* ---------- οριζόντιος κατάλογος προϊόντων (βέλη) ---------- */
+  $$("[data-scroll]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var box = document.getElementById(btn.getAttribute("data-scroll"));
+      if (!box) return;
+      var card = box.firstElementChild;
+      var step = card ? card.getBoundingClientRect().width + 18 : 340;
+      box.scrollBy({ left: step * Number(btn.getAttribute("data-dir") || 1), behavior: "smooth" });
+    });
+  });
+
   /* ---------- external links ---------- */
   $$('a[href^="http"]').forEach(function (a) {
     if (a.hostname && a.hostname !== location.hostname && !a.getAttribute("rel")) {
