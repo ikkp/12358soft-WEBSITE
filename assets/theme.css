@@ -606,6 +606,8 @@ body.sticky-active { padding-bottom: 78px; }
 .lic-price strong { font-size: 1.85rem; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
 .lic-price s { color: var(--muted-2); font-size: .84rem; }
 .lic-price small { color: var(--muted); font-size: .74rem; }
+.lic-price.is-text strong { font-size: 1.22rem; letter-spacing: -.01em; }
+.lic-extra { color: var(--muted-2); font-size: .76rem; margin-top: 10px; line-height: 1.5; }
 .lic-desc { color: var(--muted); font-size: .87rem; }
 .lic-rights { list-style: none; display: grid; gap: 7px; margin: 6px 0 0; }
 .lic-rights li { position: relative; padding-left: 23px; font-size: .85rem; color: var(--text-2); }
