@@ -857,6 +857,35 @@ body.sticky-active { padding-bottom: 78px; }
 .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
 .footer-links a:hover { color: var(--accent); }
 
+/* ---------- φωτεινό θέμα: καθαρές επιφάνειες + απαλή σκιά ---------- */
+html[data-theme="light"] .f-card,
+html[data-theme="light"] .p-card,
+html[data-theme="light"] .d-card,
+html[data-theme="light"] .post-card,
+html[data-theme="light"] .lic-card,
+html[data-theme="light"] .train-card,
+html[data-theme="light"] .step,
+html[data-theme="light"] .quote,
+html[data-theme="light"] .c-card,
+html[data-theme="light"] .support-panel,
+html[data-theme="light"] .contact-aside,
+html[data-theme="light"] .author-box {
+  background: var(--surface);
+  box-shadow: 0 1px 2px rgba(16, 24, 48, .05), 0 14px 34px rgba(16, 24, 48, .055);
+}
+html[data-theme="light"] .cta-band {
+  background:
+    radial-gradient(620px 280px at 8% 0%, rgba(58, 91, 232, .16), transparent 70%),
+    radial-gradient(520px 280px at 92% 100%, rgba(122, 77, 240, .13), transparent 70%),
+    radial-gradient(400px 220px at 55% 120%, rgba(11, 156, 116, .08), transparent 70%),
+    var(--surface);
+  box-shadow: 0 1px 2px rgba(16, 24, 48, .05), 0 18px 44px rgba(16, 24, 48, .07);
+}
+html[data-theme="light"] .p-card-media { background: #0B0F1A; }
+html[data-theme="light"] .buy-media { box-shadow: 0 2px 4px rgba(16, 24, 48, .06), 0 26px 60px rgba(16, 24, 48, .13); }
+html[data-theme="light"] .site-header.is-scrolled { box-shadow: 0 10px 30px rgba(16, 24, 48, .06); }
+html[data-theme="light"] .toc { border-left-color: rgba(10, 16, 32, .08); }
+
 /* ---------- reveal ---------- */
 .reveal { opacity: 0; transform: translateY(14px); transition: opacity .55s var(--ease), transform .55s var(--ease); }
 .reveal.is-in { opacity: 1; transform: none; }
