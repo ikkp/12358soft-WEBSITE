@@ -224,13 +224,13 @@ html[data-theme="light"] .theme-btn .i-moon { display: block; }
   border-bottom-color: var(--line);
 }
 .header-inner { display: flex; align-items: center; gap: 28px; height: var(--header-h); }
-.brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: -.03em; font-size: 1.14rem; }
+.brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: -.03em; font-size: 1.36rem; }
 .brand-name { white-space: nowrap; }
 .brand-soft { color: var(--muted); font-weight: 500; }
-.brand:hover .brand-soft { color: var(--accent); }
-.brand-mark { border-radius: 9px; box-shadow: 0 4px 14px rgba(255, 138, 0, .30), inset 0 1px 0 rgba(255, 255, 255, .30);
+.brand:hover .brand-soft { color: var(--text); }
+.brand-mark { width: 40px; height: 40px; border-radius: 11px; box-shadow: 0 5px 16px rgba(255, 138, 0, .32), inset 0 1px 0 rgba(255, 255, 255, .30);
   background: linear-gradient(140deg, #FFB020, #FF8A00); display: inline-grid; place-items: center; flex: none; }
-.brand-mark svg { width: 72%; height: 72%; }
+.brand-mark svg { width: 74%; height: 74%; }
 .nav { display: flex; gap: 4px; margin-left: 10px; flex: 1; }
 .nav-link {
   position: relative; padding: 9px 12px; border-radius: 10px;
@@ -927,6 +927,8 @@ html[data-theme="light"] .toc { border-left-color: rgba(10, 16, 32, .08); }
 }
 @media (max-width: 640px) {
   body { font-size: 16px; }
+  .brand { font-size: 1.22rem; gap: 10px; }
+  .brand-mark { width: 34px; height: 34px; border-radius: 9px; }
   .container { width: min(var(--container), 100% - 32px); }
   .grid-2, .grid-3 { grid-template-columns: 1fr; }
   .hero { padding-top: 40px; }
