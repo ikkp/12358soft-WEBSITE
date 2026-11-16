@@ -733,6 +733,10 @@ body.sticky-active { padding-bottom: 78px; }
 .upg-route b { font-weight: 600; color: var(--text); }
 .upg-desc { color: var(--muted); font-size: .86rem; flex: 1; }
 .upg-action { margin-top: 8px; }
+.upg-price { display: flex; align-items: baseline; gap: 8px; margin-top: 2px; }
+.upg-price strong { font-size: 1.5rem; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.upg-price small { color: var(--muted); font-size: .74rem; }
+.upg-price.is-text strong { font-size: 1rem; letter-spacing: 0; color: var(--text-2); font-weight: 600; }
 .upg-cross { display: flex; align-items: center; justify-content: space-between; gap: 26px; flex-wrap: wrap;
   margin-top: 18px; padding: 26px 28px; border-radius: 18px; border: 1px solid var(--line); background: var(--surface-2); }
 .upg-cross > div { flex: 1 1 420px; display: flex; flex-direction: column; gap: 8px; }
