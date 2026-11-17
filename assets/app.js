@@ -496,6 +496,31 @@
     });
   });
 
+  /* ---------- κάρτα ανακοίνωσης: ταίριασμα γραμματοσειράς ---------- */
+  function fitAnnounce() {
+    if (window.innerWidth <= 900) return;
+    $$(".announce-text").forEach(function (el) {
+      var card = el.closest(".announce");
+      if (!card) return;
+      el.style.fontSize = "";
+      var size = parseFloat(getComputedStyle(el).fontSize);
+      var guard = 0;
+      while (card.scrollHeight > card.clientHeight + 1 && size > 15 && guard < 60) {
+        size -= 1;
+        el.style.fontSize = size + "px";
+        guard++;
+      }
+    });
+  }
+  fitAnnounce();
+  requestAnimationFrame(fitAnnounce);
+  window.addEventListener("load", fitAnnounce);
+  var fitTimer;
+  window.addEventListener("resize", function () {
+    clearTimeout(fitTimer);
+    fitTimer = setTimeout(fitAnnounce, 150);
+  });
+
   /* ---------- external links ---------- */
   $$('a[href^="http"]').forEach(function (a) {
     if (a.hostname && a.hostname !== location.hostname && !a.getAttribute("rel")) {
