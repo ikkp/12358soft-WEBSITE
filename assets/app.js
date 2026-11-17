@@ -521,26 +521,16 @@
     fitTimer = setTimeout(fitAnnounce, 150);
   });
 
-  /* ---------- κάρτα ανακοίνωσης: αναποδογύρισμα και μετάβαση ---------- */
+  /* ---------- κάρτα ανακοίνωσης: ελαφρύ γέρσιμο στο hover ---------- */
   $$(".announce-link").forEach(function (link) {
-    var wrap = link.closest(".announce-wrap");
-    if (wrap) {
-      var on = function () { wrap.classList.add("is-hover"); };
-      var off = function () { wrap.classList.remove("is-hover"); };
-      link.addEventListener("mouseenter", on);
-      link.addEventListener("mouseleave", off);
-      link.addEventListener("focus", on);
-      link.addEventListener("blur", off);
-    }
-    link.addEventListener("click", function (ev) {
-      var card = link.closest(".announce-wrap");
-      if (!card || window.innerWidth <= 900) return;              // κινητό: κανονική μετάβαση
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-      ev.preventDefault();
-      card.classList.add("flipping");
-      setTimeout(function () { window.location.href = link.href; }, 500);
-    });
+    var card = link.closest(".announce");
+    if (!card) return;
+    var on = function () { card.classList.add("is-hover"); };
+    var off = function () { card.classList.remove("is-hover"); };
+    link.addEventListener("mouseenter", on);
+    link.addEventListener("mouseleave", off);
+    link.addEventListener("focus", on);
+    link.addEventListener("blur", off);
   });
 
   /* ---------- external links ---------- */
