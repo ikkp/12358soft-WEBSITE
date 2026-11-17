@@ -336,7 +336,7 @@ html[data-theme="light"] .hero-bg::after {
 .hero-page .hero-points { margin-top: 20px; }
 
 
-/* Κάρτα ανακοίνωσης — ελαφρώς γερμένη: δεξιά ψηλότερα, αριστερά χαμηλότερα */
+/* Κάρτα ανακοίνωσης — γέρνει γύρω από τον κατακόρυφο άξονα: δεξιά βγαίνει μπροστά, αριστερά βυθίζεται */
 .announce {
   position: relative; overflow: hidden; isolation: isolate;
   min-height: clamp(320px, 33vw, 410px);
@@ -349,7 +349,7 @@ html[data-theme="light"] .hero-bg::after {
     radial-gradient(90% 80% at 4% 96%, rgba(46, 226, 178, .16), transparent 62%),
     linear-gradient(165deg, #131F38, #0A1120 62%);
   box-shadow: 0 30px 64px rgba(9, 14, 28, .32), 0 0 0 1px rgba(255, 255, 255, .04) inset;
-  transform: rotate(-1.6deg);
+  transform: perspective(1500px) rotateY(-7deg);
   transition: transform .45s cubic-bezier(.22, .61, .36, 1), box-shadow .35s ease;
 }
 .announce::before {
@@ -360,7 +360,7 @@ html[data-theme="light"] .hero-bg::after {
   background-size: 26px 26px;
   mask-image: radial-gradient(120% 120% at 50% 40%, #000 30%, transparent 78%);
 }
-.announce.is-hover { transform: rotate(-2.6deg); box-shadow: 0 40px 76px rgba(9, 14, 28, .38), 0 0 0 1px rgba(255, 255, 255, .05) inset; }
+.announce.is-hover { transform: perspective(1500px) rotateY(-9.5deg); box-shadow: 0 40px 76px rgba(9, 14, 28, .38), 0 0 0 1px rgba(255, 255, 255, .05) inset; }
 .announce-tag {
   align-self: flex-start; font-size: .66rem; font-weight: 700; letter-spacing: .14em;
   text-transform: uppercase; padding: 5px 10px; border-radius: 999px;
