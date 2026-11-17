@@ -620,6 +620,13 @@ body.sticky-active { padding-bottom: 78px; }
   border: 1px solid rgba(108, 140, 255, .3);
 }
 .lic-card h3 { font-size: 1.08rem; padding-right: 76px; }
+.lic-group { font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted-2); margin: 34px 0 14px; }
+.lic-group:first-of-type { margin-top: 6px; }
+.lic-action { margin-top: auto; padding-top: 16px; }
+@media (min-width: 760px) {
+  .section-licenses .lic-card { min-height: 27.5rem; }
+}
 .lic-price { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
 .lic-price strong { font-size: 1.85rem; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
 .lic-price s { color: var(--muted-2); font-size: .84rem; }
