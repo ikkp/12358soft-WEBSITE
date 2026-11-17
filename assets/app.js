@@ -5,6 +5,12 @@
 (function () {
   "use strict";
 
+  // Κείμενα διεπαφής από το vault (ELEMENTS/ΚΕΙΜΕΝΑ ΔΙΕΠΑΦΗΣ.md)
+  function T(key, fallback) {
+    var ui = window.SITE_UI || {};
+    return ui[key] || fallback;
+  }
+
   var CFG = window.SITE_CONFIG || {};
   var $ = function (sel, root) { return (root || document).querySelector(sel); };
   var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
@@ -158,11 +164,11 @@
       var value = (input.value || "").trim();
       var msg = "";
       if (input.type === "checkbox") {
-        if (!input.checked) msg = "Απαιτείται η συγκατάθεσή σας.";
+        if (!input.checked) msg = T("ΜΗΝΥΜΑ_ΣΥΓΚΑΤΑΘΕΣΗ", "Απαιτείται η συγκατάθεσή σας.");
       } else if (!value) {
-        msg = "Το πεδίο είναι υποχρεωτικό.";
+        msg = T("ΜΗΝΥΜΑ_ΥΠΟΧΡΕΩΤΙΚΟ", "Το πεδίο είναι υποχρεωτικό.");
       } else if (input.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)) {
-        msg = "Συμπληρώστε ένα έγκυρο email.";
+        msg = T("ΜΗΝΥΜΑ_EMAIL", "Συμπληρώστε ένα έγκυρο email.");
       }
       setError(input, msg);
       if (msg) ok = false;
@@ -180,7 +186,7 @@
     if (on) {
       btn.dataset.label = btn.textContent;
       btn.disabled = true;
-      btn.textContent = label || "Αποστολή…";
+      btn.textContent = label || T("ΜΗΝΥΜΑ_ΑΠΟΣΤΟΛΗ", "Αποστολή…");
     } else {
       btn.disabled = false;
       if (btn.dataset.label) btn.textContent = btn.dataset.label;
@@ -218,10 +224,13 @@
     var version = btn.getAttribute("data-version") || "";
     var url = btn.getAttribute("data-url") || "";
     var file = btn.getAttribute("data-file") || "";
-    $("#dl-title").textContent = "Λήψη: " + app;
-    $("[data-dl-lead]").textContent =
-      "Συμπληρώστε τα στοιχεία σας και θα λάβετε τον σύνδεσμο λήψης" +
-      (version ? " για την έκδοση " + version : "") + " στο email σας.";
+    $("#dl-title").textContent = T("ΛΗΨΗ_MODAL_TITLE", "Λήψη: {app}").replace("{app}", app);
+    var verPart = version
+      ? T("ΛΗΨΗ_ΜΕ_ΕΚΔΟΣΗ", " για την έκδοση {version}").replace("{version}", version)
+      : "";
+    $("[data-dl-lead]").textContent = T("ΛΗΨΗ_MODAL_LEAD",
+      "Συμπληρώστε τα στοιχεία σας και θα λάβετε τον σύνδεσμο λήψης{version_part} στο email σας.")
+      .replace("{version_part}", verPart);
     var form = $('[data-form="download"]', modal);
     form.reset();
     clearErrors(form);
@@ -259,7 +268,7 @@
       ev.preventDefault();
       clearErrors(dlForm);
       if (dlForm.elements.company.value) return;              // honeypot
-      if (!validate(dlForm)) { formMessage(dlForm, "Ελέγξτε τα πεδία που σημειώνονται."); return; }
+      if (!validate(dlForm)) { formMessage(dlForm, T("ΜΗΝΥΜΑ_ΕΛΕΓΧΟΣ", "Ελέγξτε τα πεδία που σημειώνονται.")); return; }
       var submit = $("[data-submit]", dlForm);
       busy(submit, true);
       var data = new FormData(dlForm);
@@ -279,7 +288,8 @@
       deliver("download", params).then(function (res) {
         busy(submit, false);
         var panel = successPanel(dlForm, "");
-        var msg = "Στείλαμε τον σύνδεσμο λήψης για το " + params.app_name + " στο " + params.to_email + ".";
+        var msg = T("ΜΗΝΥΜΑ_ΛΗΨΗ_ΣΤΑΛΘΗΚΕ", "Στείλαμε τον σύνδεσμο λήψης για το {app} στο {email}.")
+          .replace("{app}", params.app_name).replace("{email}", params.to_email);
         if (panel) {
           var t = panel.querySelector("[data-success-text]");
           if (t) t.textContent = msg;
@@ -296,7 +306,7 @@
         }
       }).catch(function (err) {
         busy(submit, false);
-        formMessage(dlForm, "Κάτι πήγε στραβά. Δοκιμάστε ξανά ή γράψτε μας στο info@12358soft.com.");
+        formMessage(dlForm, T("ΜΗΝΥΜΑ_ΣΦΑΛΜΑ_EMAIL", "Κάτι πήγε στραβά. Δοκιμάστε ξανά ή γράψτε μας στο info@12358soft.com."));
         console.error(err);
       });
     });
@@ -308,7 +318,7 @@
       ev.preventDefault();
       clearErrors(form);
       if (form.elements.company && form.elements.company.value) return;
-      if (!validate(form)) { formMessage(form, "Ελέγξτε τα πεδία που σημειώνονται."); return; }
+      if (!validate(form)) { formMessage(form, T("ΜΗΝΥΜΑ_ΕΛΕΓΧΟΣ", "Ελέγξτε τα πεδία που σημειώνονται.")); return; }
       var submit = $("[data-submit]", form);
       busy(submit, true);
       var data = new FormData(form);
@@ -328,12 +338,12 @@
         var panel = successPanel(form, "");
         if (panel) {
           var t = panel.querySelector("[data-success-text]");
-          if (t) t.textContent = "Ευχαριστούμε! Θα απαντήσουμε στο " + params.to_email + " το συντομότερο.";
+          if (t) t.textContent = T("ΜΗΝΥΜΑ_ΕΥΧΑΡΙΣΤΩ", "Ευχαριστούμε! Θα απαντήσουμε στο {email} το συντομότερο.").replace("{email}", params.to_email);
           $$("[data-demo-note]", panel).forEach(function (n) { n.hidden = !res.demo; });
         }
       }).catch(function (err) {
         busy(submit, false);
-        formMessage(form, "Κάτι πήγε στραβά. Δοκιμάστε ξανά ή καλέστε στο 212 105 0767.");
+        formMessage(form, T("ΜΗΝΥΜΑ_ΣΦΑΛΜΑ_ΤΗΛ", "Κάτι πήγε στραβά. Δοκιμάστε ξανά ή καλέστε στο 212 105 0767."));
         console.error(err);
       });
     });
@@ -354,7 +364,7 @@
         site: CFG.domain || "12358soft.com", submitted_at: new Date().toISOString()
       }).then(function (res) {
         busy(submit, false);
-        formMessage(form, res.demo ? "Εγγραφή (demo) — δεν στάλθηκε email." : "Εγγραφήκατε. Ευχαριστούμε!", true);
+        formMessage(form, res.demo ? T("ΜΗΝΥΜΑ_ΕΓΓΡΑΦΗ_DEMO", "Εγγραφή (demo). Δεν στάλθηκε email.") : T("ΜΗΝΥΜΑ_ΕΓΓΡΑΦΗ_ΟΚ", "Εγγραφήκατε. Ευχαριστούμε!"), true);
         input.value = "";
       }).catch(function () {
         busy(submit, false);
@@ -469,7 +479,9 @@
   $$("[data-cookie]").forEach(function (btn) {
     btn.addEventListener("click", function () {
       saveConsent(btn.getAttribute("data-cookie") === "all");
-      showToast(btn.getAttribute("data-cookie") === "all" ? "Ευχαριστούμε για τη συγκατάθεση." : "Μόνο τα απαραίτητα cookies.");
+      showToast(btn.getAttribute("data-cookie") === "all"
+        ? T("ΜΗΝΥΜΑ_COOKIE_ΟΛΑ", "Ευχαριστούμε για τη συγκατάθεση.")
+        : T("ΜΗΝΥΜΑ_COOKIE_ΜΟΝΟ", "Μόνο τα απαραίτητα cookies."));
     });
   });
 
