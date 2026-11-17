@@ -349,6 +349,8 @@ html[data-theme="light"] .hero-bg::after {
     radial-gradient(90% 80% at 4% 96%, rgba(46, 226, 178, .16), transparent 62%),
     linear-gradient(165deg, #131F38, #0A1120 62%);
   box-shadow: 0 32px 70px rgba(9, 14, 28, .34), 0 0 0 1px rgba(255, 255, 255, .04) inset;
+  transform: perspective(1500px) rotateY(-7deg);
+  transform-origin: 50% 50%;
 }
 .announce::before {
   content: ""; position: absolute; inset: 0; z-index: -1; opacity: .5;
@@ -377,7 +379,9 @@ html[data-theme="light"] .hero-bg::after {
 }
 .announce-link:hover { color: #fff; border-color: #fff; }
 @media (min-width: 901px) { .announce { height: clamp(320px, 33vw, 410px); } }
-@media (max-width: 900px) { .announce { min-height: 220px; } }
+@media (max-width: 900px) {
+  .announce { min-height: 220px; transform: none; }
+}
 
 /* hero art */
 .hero-art { position: relative; perspective: 1400px; min-height: 380px; }
