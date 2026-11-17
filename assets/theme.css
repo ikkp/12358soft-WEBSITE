@@ -299,10 +299,11 @@ html[data-theme="light"] .hero-bg::after {
     linear-gradient(rgba(10, 16, 32, .06) 1px, transparent 1px),
     linear-gradient(90deg, rgba(10, 16, 32, .06) 1px, transparent 1px);
 }
-.hero-inner { position: relative; z-index: 1; display: grid; gap: clamp(32px, 5vw, 64px); align-items: center; }
-.hero-home .hero-inner { grid-template-columns: 1.04fr .96fr; }
+.hero-inner { position: relative; z-index: 1; display: grid; gap: clamp(32px, 5vw, 64px); align-items: start; }
+.hero-home { padding-top: clamp(34px, 4.6vw, 62px); }
+.hero-home .hero-inner { grid-template-columns: 1.04fr .96fr; padding-top: 10px; }
 .hero-page { padding-top: clamp(34px, 4.6vw, 62px); padding-bottom: clamp(20px, 3vw, 34px); }
-.hero-page .hero-inner { grid-template-columns: 1.04fr .96fr; padding: 10px 0 0; align-items: center; }
+.hero-page .hero-inner { grid-template-columns: 1.04fr .96fr; padding: 10px 0 0; align-items: start; }
 .hero-page .hero-copy { max-width: 620px; }
 .hero-page.single .hero-inner { grid-template-columns: minmax(0, 760px); }
 .hero-page .hero-cta, .hero-page .hero-points, .hero-page .filter-bar { justify-content: flex-start; }
